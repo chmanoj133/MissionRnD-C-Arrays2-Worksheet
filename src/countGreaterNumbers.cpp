@@ -17,7 +17,7 @@ NOTES:
 #include <stdio.h>
 #include <stdlib.h>
 
-bool strcmp(char *str1, char *str2);
+bool string_compare(char *str1, char *str2);
 int string_length(char *str);
 int* date_in_int(char* date);
 
@@ -41,7 +41,7 @@ int countGreaterNumbers(struct transaction *Arr, int len, char *date)
 
 	for (i = len - 1; i >= 0; i--)
 	{
-		if (strcmp(Arr[i].date, date))
+		if (string_compare(Arr[i].date, date))
 			break;
 	}
 
@@ -114,7 +114,7 @@ int countGreaterNumbers(struct transaction *Arr, int len, char *date)
 	{
 		// This can also be optimised by incrementing i in powers of 2 but in general, 
 		// Daily transitions are limited to small number of times, we can go with linear search here
-		while (strcmp(Arr[i].date, date))
+		while (string_compare(Arr[i].date, date))
 			i++;
 	}
 	else
@@ -136,7 +136,7 @@ int* date_in_int(char* date)
 
 
 // String comparsion
-bool strcmp(char *str1, char *str2)
+bool string_compare(char *str1, char *str2)
 {
 	int i;
 	int len = string_length(str1);
