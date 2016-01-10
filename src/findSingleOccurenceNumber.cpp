@@ -14,5 +14,5 @@ NOTES:
 */
 
 int findSingleOccurenceNumber(int *A, int len) {
-	return -1;
+	return 0;
 }

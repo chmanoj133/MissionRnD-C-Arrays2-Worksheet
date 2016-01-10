@@ -95,6 +95,8 @@ struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen,
 			j++;
 		else if (date == 2)
 			i++;
+		// If transactions are high, (> 1000), we can increment i, j in steps of powers of 2.
+		// Here, this is enough as there are less transactions
 		else
 		{
 			if (A[i].amount == B[j].amount && stringcompare(A[i].description, B[j].description))
