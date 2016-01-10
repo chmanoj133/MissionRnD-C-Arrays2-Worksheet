@@ -20,6 +20,7 @@ NOTES:
 bool string_compare(char *str1, char *str2);
 int string_length(char *str);
 int* date_in_int(char* date);
+int dateCompare(char *date1, char* date2);
 
 struct transaction {
 	int amount;
@@ -60,7 +61,7 @@ int countGreaterNumbers(struct transaction *Arr, int len, char *date)
 
 int countGreaterNumbers(struct transaction *Arr, int len, char *date)
 {
-	int i, *date1, *date2, d = 0, m = 1, y = 2, left = 0, right = len - 1;
+	int i, *date1, *date2, d = 0, m = 1, y = 2, left = 0, right = len - 1, flag;
 	bool found = false;
 
 	// Here date validation can be done and can return NULL when ever a date is invalid
@@ -68,41 +69,20 @@ int countGreaterNumbers(struct transaction *Arr, int len, char *date)
 	if (Arr == NULL || len == NULL || date == NULL)
 		return NULL;
 
-	date1 = date_in_int(date);
 
 	while (left <= right)
 	{
 		i = (right + left) / 2;
-		date2 = date_in_int(Arr[i].date);
-		if (date1[y] == date2[y])
+		
+		flag = dateCompare(date, Arr[i].date);
+		if (flag == 0)
 		{
-			if (date1[m] == date2[m])
-			{
-				if (date1[d] == date2[d])
-				{
-					found = true;
-					break;
-				}
-				else
-				{
-					if (date1[d] > date2[d])
-						left = i + 1;
-					else
-						right = i - 1;
-				}
-			}
-			else
-			{
-				if (date1[m] > date2[m])
-					left = i + 1;
-				else
-					right = i - 1;
-			}
-
+			found = true;
+			break;
 		}
 		else
 		{
-			if (date1[y] > date2[y])
+			if (flag == 1)
 				left = i + 1;
 			else
 				right = i - 1;
@@ -132,6 +112,34 @@ int* date_in_int(char* date)
 	ans[1] = (date[3] - '0') * 10 + (date[4] - '0');
 	ans[2] = (date[6] - '0') * 1000 + (date[7] - '0') * 100 + (date[8] - '0') * 10  + (date[9] - '0');
 	return ans;
+}
+
+// Compares two dates
+int dateCompare(char *date1, char* date2)
+{
+	int *d1 = date_in_int(date1), *d2 = date_in_int(date2);
+	int d = 0, m = 1, y = 2;
+
+	if (d1[y] > d2[y])
+		return 1;
+	else if (d1[y] < d2[y])
+		return 2;
+	else
+	{
+		if (d1[m] > d2[m])
+			return 1;
+		else if (d1[m] < d2[m])
+			return 2;
+		else
+		{
+			if (d1[d] > d2[d])
+				return 1;
+			else if (d1[d] < d2[d])
+				return 2;
+			else
+				return 0;
+		}
+	}
 }
 
 
